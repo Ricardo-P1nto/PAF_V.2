@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto/PaginaRegistar.dart';
-import 'PaginaPrincipal.dart';
-
 void main() => runApp (
   MaterialApp(
     debugShowCheckedModeBanner: false,
