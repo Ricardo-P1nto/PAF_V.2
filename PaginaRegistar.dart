@@ -223,7 +223,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
         void navigateToHomePage() {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Homepage()),
+            MaterialPageRoute(builder: (context) => const Homepage()),
           );
         }
 }
