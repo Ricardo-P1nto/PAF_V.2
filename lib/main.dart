@@ -15,7 +15,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( // Envolve todo o conteúdo para evitar áreas inseguras
+      body: SafeArea(
         child: Stack(
           children: [
             // Imagem de fundo
@@ -248,5 +248,6 @@ class Homepage extends StatelessWidget {
     );
   }
 }
+
 
 
