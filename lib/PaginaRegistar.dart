@@ -1,229 +1,207 @@
 import 'package:flutter/material.dart';
-
 import 'main.dart';
 
-class PaginaRegistar extends StatefulWidget {
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
-  final TextEditingController emailController;
-  final TextEditingController datanastimentoController;
-  final TextEditingController ccController;
-  final TextEditingController confirmpasswordController;
+void main() => runApp(
+  const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Homepage(),
+  ),
+);
 
-  const PaginaRegistar({
-    super.key,
-    required this.usernameController,
-    required this.passwordController,
-    required this.emailController,
-    required this.datanastimentoController,
-    required this.ccController,
-    required this.confirmpasswordController,
-  });
+class PaginaRegistar extends StatefulWidget {
+  const PaginaRegistar({super.key});
 
   @override
-  _PaginaRegistarState createState() => _PaginaRegistarState();
+  State<PaginaRegistar> createState() => _PaginaRegistarState();
 }
 
 class _PaginaRegistarState extends State<PaginaRegistar> {
-  int currentStep = 0; // Track the current registration step
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-              if(currentStep == 0 )
-
-                const Text(
-                  "Faça o resgistro da sua conta",
-                  style: TextStyle(fontSize: 18.0),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Imagem de fundo
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/imagens/FotoDeLisboa2.jpg"),
+                  fit: BoxFit.cover,
                 ),
-
-                Column(
-                  children: [
-                    const SizedBox(height: 25),
-                    TextField(
-                      controller: widget.usernameController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Username',
-                      ),
-                    ),
-
-
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Password',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.confirmpasswordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Confirmar password',
-                      ),
-                    ),
-                   ],
-                ),
-
-              if (currentStep == 1)
-
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.emailController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors
-                              .deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Email',
-                      ),
-                    ),
-                  ],
-                ),
-
-              if (currentStep == 2)
-
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.ccController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors
-                              .deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Numero do CC',
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.datanastimentoController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Data de Nascimento',
-                      ),
-                    ),
-                  ],
-                ),
-
-
-          const SizedBox(height: 16),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: _butaoVoltar,
-                    child: const Text('Voltar átras'),
-                  ),
-
-                  Container(width: 20),
-
-                  ElevatedButton(
-                  onPressed: _butaoRegistar,
-                  child: const Text('Avançar'),
-                  ),
-                ],
               ),
-            ],
-          ),
+            ),
+
+            // Conteúdo principal
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Registar",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Venha criar a sua conta conosco",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _primeiroPasso(context),
+                      _segundoPasso(context),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 
+  Widget _primeiroPasso(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color.fromRGBO(255, 253, 208, 1),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(60),
+          topRight: Radius.circular(60),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: "Nome",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Confirmar Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text("Próximo Passo"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-        void _butaoRegistar() {
-          setState(() {
-            if (currentStep < 4) {
-              currentStep++;
-            } else {
-              if (currentStep == 0) {
-                navigateToHomePage();
-              } else {
-                // Registration completed, you can navigate to the next screen or perform final actions
-                print('Registration completed!');
-              }
-            }
-          });
-        }
-
-
-        void _butaoVoltar() {
-          setState(() {
-            if (currentStep > 0) {
-              currentStep--;
-            } else if (currentStep == 0) {
-                navigateToHomePage();
-              } else {
-                // Registration completed, you can navigate to the next screen or perform final actions
-                print('Registration completed!');
-              }
-            }
-
-          );
-        }
-
-        void navigateToHomePage() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Homepage()),
-          );
-        }
+  Widget _segundoPasso(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color.fromRGBO(255, 253, 208, 1),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(60),
+          topRight: Radius.circular(60),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: "NIF",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: "Número de Telemóvel",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: "Email",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                // Aqui você pode implementar a lógica de cadastro
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Homepage(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text("Finalizar Registro"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
