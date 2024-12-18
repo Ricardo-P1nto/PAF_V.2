@@ -1,229 +1,270 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/RegistarPasso2.dart';
 
-import 'main.dart';
+void main() => runApp(
+  const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: PaginaRegistar(),
+  ),
+);
 
 class PaginaRegistar extends StatefulWidget {
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
-  final TextEditingController emailController;
-  final TextEditingController datanastimentoController;
-  final TextEditingController ccController;
-  final TextEditingController confirmpasswordController;
-
-  const PaginaRegistar({
-    super.key,
-    required this.usernameController,
-    required this.passwordController,
-    required this.emailController,
-    required this.datanastimentoController,
-    required this.ccController,
-    required this.confirmpasswordController,
-  });
+  const PaginaRegistar({super.key});
 
   @override
-  _PaginaRegistarState createState() => _PaginaRegistarState();
+  State<PaginaRegistar> createState() => _PaginaRegistarState();
 }
 
-class _PaginaRegistarState extends State<PaginaRegistar> {
-  int currentStep = 0; // Track the current registration step
 
+class _PaginaRegistarState extends State<PaginaRegistar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      // Detecta o espaço disponível com o teclado ativo
+      final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: Stack(
             children: [
-
-              if(currentStep == 0 )
-
-                const Text(
-                  "Faça o resgistro da sua conta",
-                  style: TextStyle(fontSize: 18.0),
-                ),
-
-                Column(
-                  children: [
-                    const SizedBox(height: 25),
-                    TextField(
-                      controller: widget.usernameController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Username',
-                      ),
-                    ),
-
-
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Password',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.confirmpasswordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Confirmar password',
-                      ),
-                    ),
-                   ],
-                ),
-
-              if (currentStep == 1)
-
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.emailController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors
-                              .deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Email',
-                      ),
-                    ),
-                  ],
-                ),
-
-              if (currentStep == 2)
-
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.ccController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors
-                              .deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Numero do CC',
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: widget.datanastimentoController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                        ),
-                        fillColor: Colors.blueAccent,
-                        filled: true,
-                        hintText: 'Data de Nascimento',
-                      ),
-                    ),
-                  ],
-                ),
-
-
-          const SizedBox(height: 16),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: _butaoVoltar,
-                    child: const Text('Voltar átras'),
+              // Imagem de fundo
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/imagens/FotoDeLisboa2.jpg"),
+                    fit: BoxFit.cover,
                   ),
-
-                  Container(width: 20),
-
-                  ElevatedButton(
-                  onPressed: _butaoRegistar,
-                  child: const Text('Avançar'),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Registar",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 40,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Venha criar a sua conta conosco",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Color.fromRGBO(255, 253, 208, 1),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(60),
+                          topRight: Radius.circular(60),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 20,
+                          bottom: bottomInset, // Adapta ao teclado
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              // Campos de texto
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromRGBO(225, 95, 27, .3),
+                                      blurRadius: 20,
+                                      offset: Offset(0, 10),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(color: Colors.grey),
+                                        ),
+                                      ),
+                                      child: const TextField(
+                                        decoration: InputDecoration(
+                                          hintText: "Nome inteiro",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(color: Colors.grey),
+                                        ),
+                                      ),
+                                      child: const TextField(
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          hintText: "Password",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: const TextField(
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          hintText: "Confirmar Password",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              // Botões de ação
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.blueGrey,
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            "Voltar Atrás",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const RegistarPasso2(),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.blueGrey,
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            "Seguinte",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 30),
+                              const Text(
+                                "Criar conta com outras plataformas",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              const SizedBox(height: 30),
+                              // Botões de Facebook e Google
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.blue,
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Facebook",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 30),
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.black,
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Google",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
-
-        void _butaoRegistar() {
-          setState(() {
-            if (currentStep < 4) {
-              currentStep++;
-            } else {
-              if (currentStep == 0) {
-                navigateToHomePage();
-              } else {
-                // Registration completed, you can navigate to the next screen or perform final actions
-                print('Registration completed!');
-              }
-            }
-          });
-        }
-
-
-        void _butaoVoltar() {
-          setState(() {
-            if (currentStep > 0) {
-              currentStep--;
-            } else if (currentStep == 0) {
-                navigateToHomePage();
-              } else {
-                // Registration completed, you can navigate to the next screen or perform final actions
-                print('Registration completed!');
-              }
-            }
-
-          );
-        }
-
-        void navigateToHomePage() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Homepage()),
-          );
-        }
 }
+
