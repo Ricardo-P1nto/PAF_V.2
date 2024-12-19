@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
 import 'PaginaRegistar.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
-  // Inicializa widgets do Flutter
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Inicializa o Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
   // Inicia o app
   runApp(const MyApp());
 }
