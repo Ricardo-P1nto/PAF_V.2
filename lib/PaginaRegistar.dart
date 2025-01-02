@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto/RegistarPasso2.dart';
+import 'main.dart';
 
 void main() => runApp(
   const MaterialApp(
@@ -64,10 +65,14 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 15),
+
                   Expanded(
                     child: Container(
+
                       width: double.infinity,
+
                       decoration: const BoxDecoration(
                         color: Color.fromRGBO(255, 253, 208, 1),
                         borderRadius: BorderRadius.only(
@@ -75,6 +80,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                           topRight: Radius.circular(60),
                         ),
                       ),
+
                       child: Padding(
                         padding: EdgeInsets.only(
                           left: 20,
@@ -82,6 +88,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                           top: 20,
                           bottom: bottomInset, // Adapta ao teclado
                         ),
+
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -153,7 +160,12 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const Homepage(),
+                                          ),
+                                        );
                                       },
                                       child: Container(
                                         height: 50,
@@ -258,6 +270,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ],
