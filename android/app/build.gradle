@@ -1,5 +1,8 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
@@ -43,9 +46,10 @@ android {
     defaultConfig {
         applicationId "com.example.untitled5"
         minSdkVersion 23
-        targetSdkVersion 33 // Substituímos flutter.targetSdkVersion por 33
+        targetSdkVersion flutter.targetSdkVersion // Substituímos flutter.targetSdkVersion por 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
