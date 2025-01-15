@@ -28,8 +28,13 @@ class PaginaRegistar extends StatefulWidget {
 }
 
 class _PaginaRegistarState extends State<PaginaRegistar> {
+  bool queroEntrar = true;
   final _formKey = GlobalKey<FormState>();
   String? password;
+
+  TextEditingController _nomecontroller = TextEditingController();
+  TextEditingController _senhacontroller = TextEditingController();
+  TextEditingController _confirmacaocontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +130,9 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         ),
                                       ),
                                       child: TextFormField(
+
+                                        controller: _nomecontroller,
+
                                         decoration: InputDecoration(
                                           hintText: "Nome inteiro",
                                           hintStyle: TextStyle(color: Colors.grey),
@@ -146,6 +154,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         ),
                                       ),
                                       child: TextFormField(
+                                        controller: _senhacontroller,
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           hintText: "Password",
@@ -163,6 +172,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       child: TextFormField(
+                                        controller: _confirmacaocontroller,
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           hintText: "Confirmar Password",
@@ -318,7 +328,16 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
   }
 
   botaoSeguinteClicado(){
-
+    if (_formKey.currentState!.validate()) {
+      if (queroEntrar){
+        print("Entrada validada");
+      } else {
+        print("Cadastro validado");
+        print("${_nomecontroller.text}, ${_senhacontroller.text}, ${_confirmacaocontroller.text}");
+      }
+    } else {
+      print("Forma inválido");
+    }
   }
 
 }
