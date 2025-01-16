@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto/RegistarPasso2.dart';
 import 'main.dart';
+import 'servicos/autenticacao_servico.dart';
 
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
@@ -32,13 +33,14 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
   final _formKey = GlobalKey<FormState>();
   String? password;
 
-  TextEditingController _nomecontroller = TextEditingController();
-  TextEditingController _senhacontroller = TextEditingController();
-  TextEditingController _confirmacaocontroller = TextEditingController();
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _senhacontroller = TextEditingController();
+  final TextEditingController _confirmacaocontroller = TextEditingController();
+
+  final AutenticacaoServico _autenServico = AutenticacaoServico();
 
   @override
   Widget build(BuildContext context) {
-    // Detecta o espaço disponível com o teclado ativo
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
@@ -46,7 +48,6 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Imagem de fundo
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -99,7 +100,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                         left: 20,
                         right: 20,
                         top: 20,
-                        bottom: bottomInset, // Adapta ao teclado
+                        bottom: bottomInset,
                       ),
                       child: SingleChildScrollView(
                         child: Form(
@@ -107,7 +108,6 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
-                              // Campos de texto
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -130,17 +130,21 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         ),
                                       ),
                                       child: TextFormField(
-
-                                        controller: _nomecontroller,
-
-                                        decoration: InputDecoration(
-                                          hintText: "Nome inteiro",
+                                        controller: _emailcontroller,
+                                        decoration: const InputDecoration(
+                                          hintText: "Email",
                                           hintStyle: TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
                                           if (value?.isEmpty ?? true) {
-                                            return 'Por favor insira o seu nome';
+                                            return 'Por favor insira um email';
+                                          } else if ((value?.length ?? 0) < 6) {
+                                            return 'O email deve ter pelo menos 6 caracteres';
+                                          } else if (!(value?.contains('@') ?? false)) {
+                                            return 'Email inválido (falta o @)';
+                                          } else if (!(value?.contains('.') ?? false)) {
+                                            return 'Email inválido (falta o .)';
                                           }
                                           return null;
                                         },
@@ -156,7 +160,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       child: TextFormField(
                                         controller: _senhacontroller,
                                         obscureText: true,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           hintText: "Password",
                                           hintStyle: TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
@@ -174,7 +178,7 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       child: TextFormField(
                                         controller: _confirmacaocontroller,
                                         obscureText: true,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           hintText: "Confirmar Password",
                                           hintStyle: TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
@@ -194,7 +198,6 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              // Botões de ação
                               Row(
                                 children: [
                                   Expanded(
@@ -227,6 +230,32 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                   ),
                                   const SizedBox(width: 20),
                                   Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (_formKey.currentState?.validate() ?? false) {
+                                          botaoSeguinteClicado();
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.blueGrey,
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            "criar conta",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  /*Expanded(
 
                                     child: GestureDetector(
                                       onTap: () {
@@ -261,7 +290,10 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
 
                                     ),
 
-                                  ),
+                                  ),*/
+
+
+
                                 ],
                               ),
                               const SizedBox(height: 30),
@@ -270,7 +302,6 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                 style: TextStyle(color: Colors.grey),
                               ),
                               const SizedBox(height: 30),
-                              // Botões de Facebook e Google
                               Row(
                                 children: [
                                   Expanded(
@@ -327,17 +358,18 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
     );
   }
 
-  botaoSeguinteClicado(){
+  void botaoSeguinteClicado() {
+    String email = _emailcontroller.text;
+    String senha = _senhacontroller.text;
+
     if (_formKey.currentState!.validate()) {
-      if (queroEntrar){
-        print("Entrada validada");
-      } else {
+      if (queroEntrar) {
         print("Cadastro validado");
-        print("${_nomecontroller.text}, ${_senhacontroller.text}, ${_confirmacaocontroller.text}");
+        print("${_emailcontroller.text}, ${_senhacontroller.text}");
+        _autenServico.cadastrarUsuario(email: email, senha: senha);
       }
     } else {
       print("Forma inválido");
     }
   }
-
 }

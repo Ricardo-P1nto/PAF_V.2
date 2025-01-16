@@ -148,7 +148,7 @@ class Homepage extends StatelessWidget {
                                     ),
 
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText: "Email",
                                         hintStyle: TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
@@ -175,7 +175,7 @@ class Homepage extends StatelessWidget {
                                     padding: const EdgeInsets.all(10),
                                     child: TextFormField(
                                       obscureText: true,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText: "Password",
                                         hintStyle: TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
