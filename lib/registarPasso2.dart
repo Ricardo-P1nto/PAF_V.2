@@ -3,11 +3,11 @@ import 'package:projeto/PaginaRegistar.dart';
 import 'main.dart';
 
 void main() => runApp(
-  const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Homepage(),
-  ),
-);
+      const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Homepage(),
+      ),
+    );
 
 class RegistarPasso2 extends StatefulWidget {
   const RegistarPasso2({super.key});
@@ -27,10 +27,7 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -121,8 +118,8 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
                                     child: const TextField(
                                       decoration: InputDecoration(
                                         hintText: "Email",
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
                                     ),
@@ -138,8 +135,8 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: "Telemovel",
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
                                     ),
@@ -150,8 +147,8 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: "NIF",
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
                                     ),
@@ -169,7 +166,8 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const PaginaRegistar(),
+                                          builder: (context) =>
+                                              const PaginaRegistar(),
                                         ),
                                       );
                                     },
@@ -198,8 +196,8 @@ class _RegistarPasso2 extends State<RegistarPasso2> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (
-                                              context) => const RegistarPasso2(),
+                                          builder: (context) =>
+                                              const RegistarPasso2(),
                                         ),
                                       );
                                     },

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto/Comun/meu_snackbar.dart';
-import 'package:projeto/RegistarPasso2.dart';
+
 import 'main.dart';
 import 'servicos/autenticacao_servico.dart';
-import 'Comun/meu_snackbar.dart';
 
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
@@ -17,11 +16,11 @@ String? passwordValidator(String? value) {
 }
 
 void main() => runApp(
-  const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: PaginaRegistar(),
-  ),
-);
+      const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: PaginaRegistar(),
+      ),
+    );
 
 class PaginaRegistar extends StatefulWidget {
   const PaginaRegistar({super.key});
@@ -128,14 +127,16 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
                                         border: Border(
-                                          bottom: BorderSide(color: Colors.grey),
+                                          bottom:
+                                              BorderSide(color: Colors.grey),
                                         ),
                                       ),
                                       child: TextFormField(
                                         controller: _emailcontroller,
                                         decoration: const InputDecoration(
                                           hintText: "Email",
-                                          hintStyle: TextStyle(color: Colors.grey),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
@@ -143,9 +144,11 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                             return 'Por favor insira um email';
                                           } else if ((value?.length ?? 0) < 6) {
                                             return 'O email deve ter pelo menos 6 caracteres';
-                                          } else if (!(value?.contains('@') ?? false)) {
+                                          } else if (!(value?.contains('@') ??
+                                              false)) {
                                             return 'Email inválido (falta o @)';
-                                          } else if (!(value?.contains('.') ?? false)) {
+                                          } else if (!(value?.contains('.') ??
+                                              false)) {
                                             return 'Email inválido (falta o .)';
                                           }
                                           return null;
@@ -156,7 +159,8 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
                                         border: Border(
-                                          bottom: BorderSide(color: Colors.grey),
+                                          bottom:
+                                              BorderSide(color: Colors.grey),
                                         ),
                                       ),
                                       child: TextFormField(
@@ -164,7 +168,8 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         obscureText: true,
                                         decoration: const InputDecoration(
                                           hintText: "Password",
-                                          hintStyle: TextStyle(color: Colors.grey),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         onChanged: (value) {
@@ -182,7 +187,8 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         obscureText: true,
                                         decoration: const InputDecoration(
                                           hintText: "Confirmar Password",
-                                          hintStyle: TextStyle(color: Colors.grey),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
@@ -208,14 +214,16 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const Homepage(),
+                                            builder: (context) =>
+                                                const Homepage(),
                                           ),
                                         );
                                       },
                                       child: Container(
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                           color: Colors.blueGrey,
                                         ),
                                         child: const Center(
@@ -234,14 +242,16 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        if (_formKey.currentState?.validate() ?? false) {
+                                        if (_formKey.currentState?.validate() ??
+                                            false) {
                                           botaoSeguinteClicado();
                                         }
                                       },
                                       child: Container(
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                           color: Colors.blueGrey,
                                         ),
                                         child: const Center(
@@ -293,9 +303,6 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                     ),
 
                                   ),*/
-
-
-
                                 ],
                               ),
                               const SizedBox(height: 30),
@@ -368,15 +375,19 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
       if (queroEntrar) {
         print("Cadastro validado");
         print("${_emailcontroller.text}, ${_senhacontroller.text}");
-        _autenServico.cadastrarUsuario(email: email, senha: senha).then((String? erro) {
-          //Voltou com erro
-          if (erro != null){
-            mostarSnackBar(context: context, mensagem: erro);
-          }else{
-            //Voltou sem erro
-            mostarSnackBar(context: context, mensagem: "Cadastro efetuado com sucesso", erro: false);
-          }
-        },
+        _autenServico.cadastrarUsuario(email: email, senha: senha).then(
+          (String? erro) {
+            //Voltou com erro
+            if (erro != null) {
+              mostarSnackBar(context: context, mensagem: erro);
+            } else {
+              //Voltou sem erro
+              mostarSnackBar(
+                  context: context,
+                  mensagem: "Cadastro efetuado com sucesso",
+                  erro: false);
+            }
+          },
         );
       }
     } else {

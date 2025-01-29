@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'PaginaRegistar.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+
+import 'PaginaRegistar.dart';
 import 'firebase_options.dart';
 
 String? passwordValidator(String? value) {
@@ -26,7 +27,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -44,11 +45,11 @@ class Homepage extends StatelessWidget {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Permite redimensionar para evitar o teclado
+      resizeToAvoidBottomInset: false,
+      // Permite redimensionar para evitar o teclado
       body: SafeArea(
         child: Stack(
           children: [
-
             // Imagem de fundo
             Container(
               width: double.infinity,
@@ -65,13 +66,11 @@ class Homepage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Text(
                         "Login",
                         style: TextStyle(
@@ -79,9 +78,7 @@ class Homepage extends StatelessWidget {
                           fontSize: 40,
                         ),
                       ),
-
                       SizedBox(height: 10),
-
                       Text(
                         "Bem vindos à Rua Saudável",
                         style: TextStyle(
@@ -89,7 +86,6 @@ class Homepage extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -97,9 +93,7 @@ class Homepage extends StatelessWidget {
                 // Container amarelo com conteúdo rolável
                 Expanded(
                   child: Container(
-
                     width: double.infinity,
-
                     decoration: const BoxDecoration(
                       color: Color.fromRGBO(255, 253, 208, 1),
                       borderRadius: BorderRadius.only(
@@ -107,7 +101,6 @@ class Homepage extends StatelessWidget {
                         topRight: Radius.circular(60),
                       ),
                     ),
-
                     child: Padding(
                       padding: EdgeInsets.only(
                         left: 20,
@@ -122,7 +115,6 @@ class Homepage extends StatelessWidget {
 
                             // Campos de texto
                             Container(
-
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -134,10 +126,8 @@ class Homepage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-
                               child: Column(
                                 children: [
-
                                   //Text Field para Email
                                   Container(
                                     padding: const EdgeInsets.all(10),
@@ -146,27 +136,27 @@ class Homepage extends StatelessWidget {
                                         bottom: BorderSide(color: Colors.grey),
                                       ),
                                     ),
-
                                     child: TextFormField(
                                       decoration: const InputDecoration(
                                         hintText: "Email",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
-
                                       validator: (value) {
                                         if (value?.isEmpty ?? true) {
                                           return 'Por favor insira um email';
                                         } else if ((value?.length ?? 0) < 6) {
                                           return 'O email deve ter pelo menos 6 caracteres';
-                                        } else if (!(value?.contains('@') ?? false)) {
+                                        } else if (!(value?.contains('@') ??
+                                            false)) {
                                           return 'Email inválido (falta o @)';
-                                        } else if (!(value?.contains('.') ?? false)) {
+                                        } else if (!(value?.contains('.') ??
+                                            false)) {
                                           return 'Email inválido (falta o .)';
                                         }
                                         return null;
                                       },
-
                                     ),
                                   ),
 
@@ -177,12 +167,11 @@ class Homepage extends StatelessWidget {
                                       obscureText: true,
                                       decoration: const InputDecoration(
                                         hintText: "Password",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
-
                                       validator: passwordValidator,
-
                                     ),
                                   ),
                                 ],
@@ -201,7 +190,8 @@ class Homepage extends StatelessWidget {
                             // Botão de Login
                             Container(
                               height: 50,
-                              margin: const EdgeInsets.symmetric(horizontal: 50),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 50),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blueGrey,
@@ -225,13 +215,15 @@ class Homepage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const PaginaRegistar(),
+                                    builder: (context) =>
+                                        const PaginaRegistar(),
                                   ),
                                 );
                               },
                               child: Container(
                                 height: 50,
-                                margin: const EdgeInsets.symmetric(horizontal: 50),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 50),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   color: Colors.blueGrey,
