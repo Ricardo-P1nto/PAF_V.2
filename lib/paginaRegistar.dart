@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/Comun/meu_snackbar.dart';
 import 'package:projeto/RegistarPasso2.dart';
 import 'main.dart';
 import 'servicos/autenticacao_servico.dart';
+import 'Comun/meu_snackbar.dart';
 
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
@@ -366,7 +368,16 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
       if (queroEntrar) {
         print("Cadastro validado");
         print("${_emailcontroller.text}, ${_senhacontroller.text}");
-        _autenServico.cadastrarUsuario(email: email, senha: senha);
+        _autenServico.cadastrarUsuario(email: email, senha: senha).then((String? erro) {
+          //Voltou com erro
+          if (erro != null){
+            mostarSnackBar(context: context, mensagem: erro);
+          }else{
+            //Voltou sem erro
+            mostarSnackBar(context: context, mensagem: "Cadastro efetuado com sucesso", erro: false);
+          }
+        },
+        );
       }
     } else {
       print("Forma inválido");
