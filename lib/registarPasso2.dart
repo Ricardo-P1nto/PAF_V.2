@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto/PaginaRegistar.dart';
-import 'main.dart';
+
+import 'Telas/main.dart';
+import 'Telas/paginaRegistar.dart';
 
 void main() => runApp(
       const MaterialApp(
