@@ -7,6 +7,7 @@ import 'package:projeto/servicos/autenticacao_servico.dart';
 import '../Comun/meu_snackbar.dart';
 import 'PaginaRegistar.dart';
 import '../firebase_options.dart';
+import 'Tela_LoginOuSignin.dart';
 
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
@@ -64,6 +65,7 @@ class _HomepageState extends State<Homepage> {
       body: SafeArea(
         child: Stack(
           children: [
+
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -74,9 +76,11 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
             ),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
                   child: Column(
@@ -100,6 +104,9 @@ class _HomepageState extends State<Homepage> {
                     ],
                   ),
                 ),
+
+
+
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -208,6 +215,44 @@ class _HomepageState extends State<Homepage> {
                                 ),
                               ),
                               const SizedBox(height: 10),
+
+
+
+
+
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const PaginaDeInicio(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 50,
+                                  margin: const EdgeInsets.symmetric(horizontal: 50),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.blueGrey,
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      "Teste",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+
+
+
+
+                              /*
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -235,6 +280,11 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                 ),
                               ),
+
+                              */
+
+
+
                               const SizedBox(height: 20),
                               const Text(
                                 "Continuar com outras plataformas",
