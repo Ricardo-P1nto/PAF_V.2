@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../Telas/main.dart';
+import '../Telas/Tela_LoginOuSignin.dart';
+import '../Telas/paginaDeLogIn.dart';
 import '../Telas/paginaPrincipal.dart';
 
 class AutenticacaoServico {
@@ -17,7 +16,7 @@ class AutenticacaoServico {
       // 🔥 Força a navegação para a Página Principal após o cadastro
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const PaginaPrincipal()),
+        MaterialPageRoute(builder: (context) => PaginaPrincipal()),
       );
 
       return null;
@@ -38,7 +37,7 @@ class AutenticacaoServico {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const PaginaPrincipal()),
+          MaterialPageRoute(builder: (context) => PaginaPrincipal()),
         );
         return null;
       } on FirebaseAuthException catch (e) {
@@ -56,7 +55,7 @@ class AutenticacaoServico {
       if (context.mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Homepage()),
+          MaterialPageRoute(builder: (context) => const PaginaDeInicio()),
         );
       }
     } catch (e) {

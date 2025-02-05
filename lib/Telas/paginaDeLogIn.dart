@@ -1,42 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:projeto/Comun/meu_snackbar.dart';
-import '../servicos/autenticacao_servico.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../Comun/meu_snackbar.dart';
 import 'Tela_LoginOuSignin.dart';
-String? passwordValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Por favor insira uma password';
-  } else if (value.length < 6) {
-    return 'A password deve ter pelo menos 6 caracteres';
-  } else if (!RegExp(r'^(?=.*[0-9]).{6,}$').hasMatch(value)) {
-    return 'A password deve conter pelo menos 1 número';
-  }
-  return null;
-}
+import 'package:projeto/servicos/autenticacao_servico.dart';
 
-class PaginaRegistar extends StatefulWidget {
-  const PaginaRegistar({super.key});
+class Paginadelogin extends StatefulWidget {
+  const Paginadelogin({super.key});
 
   @override
-  State<PaginaRegistar> createState() => _PaginaRegistarState();
+  _PaginadeloginState createState() => _PaginadeloginState();
 }
 
-class _PaginaRegistarState extends State<PaginaRegistar> {
-  bool queroEntrar = true;
+class _PaginadeloginState extends State<Paginadelogin> {
   final _formKey = GlobalKey<FormState>();
-  String? password;
-
-  final TextEditingController _emailcontroller = TextEditingController();
-  final TextEditingController _senhacontroller = TextEditingController();
-  final TextEditingController _confirmacaocontroller = TextEditingController();
-
-  final AutenticacaoServico _autenServico = AutenticacaoServico();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final AutenticacaoServico _autenServico = AutenticacaoServico(); // Create an instance of AutenticacaoServico
+  bool _isLoading = false; // Add a loading state variable
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -98,16 +82,14 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
                                         border: Border(
-                                          bottom:
-                                          BorderSide(color: Colors.grey),
+                                          bottom: BorderSide(color: Colors.grey),
                                         ),
                                       ),
                                       child: TextFormField(
-                                        controller: _emailcontroller,
+                                        controller: _emailController,
                                         decoration: const InputDecoration(
                                           hintText: "Email",
-                                          hintStyle:
-                                          TextStyle(color: Colors.grey),
+                                          hintStyle: TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
@@ -115,11 +97,9 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                             return 'Por favor insira um email';
                                           } else if ((value?.length ?? 0) < 6) {
                                             return 'O email deve ter pelo menos 6 caracteres';
-                                          } else if (!(value?.contains('@') ??
-                                              false)) {
+                                          } else if (!(value?.contains('@') ?? false)) {
                                             return 'Email inválido (falta o @)';
-                                          } else if (!(value?.contains('.') ??
-                                              false)) {
+                                          } else if (!(value?.contains('.') ?? false)) {
                                             return 'Email inválido (falta o .)';
                                           }
                                           return null;
@@ -128,46 +108,19 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                     ),
                                     Container(
                                       padding: const EdgeInsets.all(10),
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                          bottom:
-                                          BorderSide(color: Colors.grey),
-                                        ),
-                                      ),
                                       child: TextFormField(
-                                        controller: _senhacontroller,
+                                        controller: _senhaController,
                                         obscureText: true,
                                         decoration: const InputDecoration(
                                           hintText: "Password",
-                                          hintStyle:
-                                          TextStyle(color: Colors.grey),
-                                          border: InputBorder.none,
-                                        ),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            password = value;
-                                          });
-                                        },
-                                        validator: passwordValidator,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: TextFormField(
-                                        controller: _confirmacaocontroller,
-                                        obscureText: true,
-                                        decoration: const InputDecoration(
-                                          hintText: "Confirmar Password",
-                                          hintStyle:
-                                          TextStyle(color: Colors.grey),
+                                          hintStyle: TextStyle(color: Colors.grey),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
                                           if (value?.isEmpty ?? true) {
-                                            return 'Por favor insira a sua confirmação de password';
-                                          }
-                                          if (value != password) {
-                                            return 'As passwords não coincidem';
+                                            return 'Por favor insira uma senha';
+                                          } else if ((value?.length ?? 0) < 6) {
+                                            return 'A senha deve ter pelo menos 6 caracteres';
                                           }
                                           return null;
                                         },
@@ -177,7 +130,13 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                 ),
                               ),
                               const SizedBox(height: 30),
+                              const Text(
+                                "Forgot Password",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              const SizedBox(height: 30),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
                                     child: GestureDetector(
@@ -185,84 +144,20 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                            const PaginaDeInicio(),
+                                            builder: (context) => const PaginaDeInicio(),
                                           ),
                                         );
                                       },
                                       child: Container(
                                         height: 50,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(50),
-                                          color: Colors.blueGrey,
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "Voltar Atrás",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        if (_formKey.currentState?.validate() ??
-                                            false) {
-                                          botaoSeguinteClicado();
-                                        }
-                                      },
-                                      child: Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(50),
-                                          color: Colors.blueGrey,
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "criar conta",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  /*Expanded(
-
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        if (_formKey.currentState?.validate() ?? false) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => const RegistarPasso2(),
-                                            ),
-                                          );
-                                        }
-                                      },
-
-                                      child: Container(
-                                        height: 50,
-
+                                        margin: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(50),
                                           color: Colors.blueGrey,
                                         ),
-
                                         child: const Center(
                                           child: Text(
-                                            "Seguinte",
+                                            "Voltar atrás",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
@@ -270,15 +165,37 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                           ),
                                         ),
                                       ),
-
                                     ),
+                                  ),
 
-                                  ),*/
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: _login,
+                                      child: Container(
+                                        height: 50,
+                                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.blueGrey,
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            "Login",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                 ],
                               ),
                               const SizedBox(height: 30),
                               const Text(
-                                "Criar conta com outras plataformas",
+                                "Continuar com outras plataformas",
                                 style: TextStyle(color: Colors.grey),
                               ),
                               const SizedBox(height: 30),
@@ -289,40 +206,55 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       height: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.blue,
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
                                       child: const Center(
-                                        child: Text(
-                                          "Facebook",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.facebook,
+                                          color: Colors.blue,
+                                          size: 40,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 30),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
                                       height: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.black,
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
                                       child: const Center(
-                                        child: Text(
-                                          "Google",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.google,
+                                          color: Colors.red,
+                                          size: 40,
                                         ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
+                              const SizedBox(height: 30),
+                              if (_isLoading)
+                                const CircularProgressIndicator(), // Show loading indicator
                             ],
                           ),
                         ),
@@ -338,27 +270,32 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
     );
   }
 
-  void botaoSeguinteClicado() {
-    String email = _emailcontroller.text;
-    String senha = _senhacontroller.text;
+  Future<void> _login() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        _isLoading = true; // Set loading state to true
+      });
 
-    if (_formKey.currentState!.validate()) {
-      if (queroEntrar) {
-        print("Cadastro validado");
-        print("Email: $email, Senha: $senha");
+      String email = _emailController.text;
+      String senha = _senhaController.text;
 
-        _autenServico.cadastrarUsuario(
-            email: email, senha: senha, context: context).then(
-              (String? erro) {
-            if (erro != null) {
-              mostarSnackBar(context: context, mensagem: erro);
-            }
-          },
-        );
-      }
-    } else {
-      print("Formulário inválido");
+      _autenServico.logarUsuarios(
+        email: email,
+        senha: senha,
+        context: context,
+      ).then(
+            (String? erro) {
+          setState(() {
+            _isLoading = false; // Set loading state to false
+          });
+
+          if (erro != null) {
+            mostarSnackBar(context: context, mensagem: erro);
+          } else {
+            // Login successful
+          }
+        },
+      );
     }
   }
-
 }

@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'Telas/main.dart';
 import 'Telas/paginaRegistar.dart';
-
-void main() => runApp(
-      const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Homepage(),
-      ),
-    );
 
 class RegistarPasso2 extends StatefulWidget {
   const RegistarPasso2({super.key});
