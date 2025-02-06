@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projeto/Comun/meu_snackbar.dart';
 import '../servicos/autenticacao_servico.dart';
 import 'Tela_LoginOuSignin.dart';
+
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Por favor insira uma password';
@@ -289,34 +291,46 @@ class _PaginaRegistarState extends State<PaginaRegistar> {
                                       height: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.blue,
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
                                       child: const Center(
-                                        child: Text(
-                                          "Facebook",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.facebook,
+                                          color: Colors.blue,
+                                          size: 40,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 30),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
                                       height: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.black,
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
                                       child: const Center(
-                                        child: Text(
-                                          "Google",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.google,
+                                          color: Colors.red,
+                                          size: 40,
                                         ),
                                       ),
                                     ),

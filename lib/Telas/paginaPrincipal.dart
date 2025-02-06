@@ -18,6 +18,9 @@ class PaginaPrincipal extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pagina Principal'),
       ),
+
+      //Aqui é o drawer que aparece quando clicamos no ícone de menu
+
       drawer: Drawer(
         child: ListView(
           children: [
@@ -35,7 +38,7 @@ class PaginaPrincipal extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PaginaConfiguracoes()),
+                  MaterialPageRoute(builder: (context) => PaginaConfiguracoes()),
                 );
               },
             ),
@@ -49,6 +52,9 @@ class PaginaPrincipal extends StatelessWidget {
           ],
         ),
       ),
+
+      //Aqui é o corpo da página principal
+
       body: Center(
         child: Text(
           "Bem-vindo, $email",
