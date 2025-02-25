@@ -47,3 +47,9 @@ android/app/google-services.json
 ios/firebase_app_id_file.json
 ios/Runner/GoogleServices-Info.plist
 lib/firebase_options.dart
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

@@ -1,14 +1,13 @@
 buildscript {
+    ext.kotlin_version = "1.9.22"// Ensure this is the desired version
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        // START: FlutterFire Configuration
-        classpath 'com.google.gms:google-services:4.3.15'
-        // END: FlutterFire Configuration
-        // Configure a versão do Android Gradle Plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
         classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'com.google.gms:google-services:4.4.2'
     }
 }
 

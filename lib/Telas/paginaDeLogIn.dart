@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../Comun/meu_snackbar.dart';
 import 'Tela_LoginOuSignin.dart';
 import 'package:projeto/servicos/autenticacao_servico.dart';
@@ -15,8 +17,8 @@ class _PaginadeloginState extends State<Paginadelogin> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
-  final AutenticacaoServico _autenServico = AutenticacaoServico(); // Create an instance of AutenticacaoServico
-  bool _isLoading = false; // Add a loading state variable
+  final AutenticacaoServico _autenServico = AutenticacaoServico();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +169,6 @@ class _PaginadeloginState extends State<Paginadelogin> {
                                       ),
                                     ),
                                   ),
-
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: _login,
@@ -190,7 +191,6 @@ class _PaginadeloginState extends State<Paginadelogin> {
                                       ),
                                     ),
                                   ),
-
                                 ],
                               ),
                               const SizedBox(height: 30),
@@ -209,7 +209,7 @@ class _PaginadeloginState extends State<Paginadelogin> {
                                         color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey.withValues(),
+                                            color: Colors.grey.withOpacity(0.5),
                                             spreadRadius: 2,
                                             blurRadius: 5,
                                             offset: const Offset(0, 3),
@@ -227,25 +227,28 @@ class _PaginadeloginState extends State<Paginadelogin> {
                                   ),
                                   const SizedBox(width: 20),
                                   Expanded(
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withValues(),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: const Offset(0, 3),
+                                    child: GestureDetector(
+                                      onTap: _loginWithGoogle,
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: const Center(
+                                          child: FaIcon(
+                                            FontAwesomeIcons.google,
+                                            color: Colors.red,
+                                            size: 40,
                                           ),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: FaIcon(
-                                          FontAwesomeIcons.google,
-                                          color: Colors.red,
-                                          size: 40,
                                         ),
                                       ),
                                     ),
@@ -254,7 +257,7 @@ class _PaginadeloginState extends State<Paginadelogin> {
                               ),
                               const SizedBox(height: 30),
                               if (_isLoading)
-                                const CircularProgressIndicator(), // Show loading indicator
+                                const CircularProgressIndicator(),
                             ],
                           ),
                         ),
@@ -273,7 +276,7 @@ class _PaginadeloginState extends State<Paginadelogin> {
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
-        _isLoading = true; // Set loading state to true
+        _isLoading = true;
       });
 
       String email = _emailController.text;
@@ -286,7 +289,7 @@ class _PaginadeloginState extends State<Paginadelogin> {
       ).then(
             (String? erro) {
           setState(() {
-            _isLoading = false; // Set loading state to false
+            _isLoading = false;
           });
 
           if (erro != null) {
@@ -296,6 +299,37 @@ class _PaginadeloginState extends State<Paginadelogin> {
           }
         },
       );
+    }
+  }
+
+  Future<void> _loginWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      // Login successful
+    } catch (e) {
+      mostarSnackBar(context: context, mensagem: 'Erro ao fazer login com o Google: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 }

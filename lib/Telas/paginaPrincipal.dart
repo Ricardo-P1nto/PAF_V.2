@@ -1,65 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:projeto/servicos/autenticacao_servico.dart';
-import 'TelasDoDrawer/paginaConfiguracoes.dart';
+import 'package:projeto/Telas/TelasDoNavigationBarItem/PaginaDasMinhasDenuncias.dart';
+import 'package:projeto/Telas/TelasDoNavigationBarItem/paginaDasDenuncias.dart';
+import 'TelasDoNavigationBarItem/paginaConfiguracoes.dart';
 
-class PaginaPrincipal extends StatelessWidget {
-  PaginaPrincipal({super.key});
+class PaginaPrincipal extends StatefulWidget {
+  const PaginaPrincipal({super.key});
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  _PaginaPrincipalState createState() => _PaginaPrincipalState();
+}
+
+class _PaginaPrincipalState extends State<PaginaPrincipal> {
+  int _selectedIndex = 0;
+
+  final List<String> _titles = [
+    'Pagina Principal',
+    'Denuncias',
+    'Minhas Denuncias', 
+    'Definições'
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    User? usuario = FirebaseAuth.instance.currentUser;
-    String email = usuario?.email ?? "Email não disponível";
-
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Pagina Principal'),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(_titles[_selectedIndex]),
+        backgroundColor: Colors.white60,
       ),
-
-      //Aqui é o drawer que aparece quando clicamos no ícone de menu
-
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              tileColor: Colors.grey[300],
-              leading: const Icon(Icons.home),
-              title: const Text('Pagina Principal'),
-              onTap: () {
-                _scaffoldKey.currentState?.openEndDrawer();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Configurações'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PaginaConfiguracoes()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Deslogar'),
-              onTap: () async {
-                await AutenticacaoServico().deslogar(context);
-              },
-            ),
-          ],
-        ),
-      ),
-
-      //Aqui é o corpo da página principal
 
       body: Center(
-        child: Text(
-          "Bem-vindo, $email",
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+        child: _selectedIndex == 0
+            ? const Text('Home Page')
+            : _selectedIndex == 1
+            ? paginaDasDenuncias()
+            : _selectedIndex == 2
+            ? paginaDasMinhasDenuncias()
+            : PaginaConfiguracoes(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Denuncias',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_sharp),
+            label: 'Minhas Denuncias',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Definições',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }

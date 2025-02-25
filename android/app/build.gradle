@@ -1,10 +1,7 @@
 plugins {
     id "com.android.application"
-    // START: FlutterFire Configuration
-    id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
-    id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -26,8 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.untitled5"
-    compileSdk 34 // Substituímos flutter.compileSdkVersion por 33
+    namespace "com.example.RuasSaudaveis"
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -35,18 +32,14 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = '11' // Atualizado para Java 11
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
-        applicationId "com.example.untitled5"
+        applicationId "com.example.RuasSaudaveis"
         minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion // Substituímos flutter.targetSdkVersion por 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -57,10 +50,17 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.9.0')
+    implementation 'com.google.firebase:firebase-analytics'
+}
